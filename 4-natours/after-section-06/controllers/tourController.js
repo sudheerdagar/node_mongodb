@@ -2,6 +2,14 @@
 const Tour=require('./../models/tourModel');
 
 
+exports.aliasTopTours=(req,res,next)=>{
+  req.query.limit=5;
+  req.query.sort='-ratingsAverage.price';
+  req.query.fields='name,price,ratingsAverage,summary,difficulty';
+  next();
+
+}
+
 // const tours = JSON.parse(
 //   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 // );
@@ -27,6 +35,42 @@ const Tour=require('./../models/tourModel');
 //   }
 //   next();
 // };
+
+ class APIFeatures{
+ 
+ constructor(query,queryString)
+ {
+  this.query=query;
+  this.queryString=queryString;
+ }
+
+
+
+
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 exports.getAllTours = async  (req, res) => {
     
