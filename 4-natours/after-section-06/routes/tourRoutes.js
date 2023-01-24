@@ -6,7 +6,8 @@ const router = express.Router();
 // router.param('id', tourController.checkID);//middleware for params
  
 //we will pass the req to a middleware that will change the query
-router.route('top-5-cheap').get(tourController.aliasTopTours,tourController.getAllTours);
+router.route('/top-5-cheap')
+.get(tourController.aliasTopTours,tourController.getAllTours);
 
 
 router
