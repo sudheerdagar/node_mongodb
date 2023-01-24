@@ -1,4 +1,5 @@
 const mongoose=require('mongoose');
+const slugify=require('slugify')
 //constructing schemas
   //we can pass different objects to 
   //
@@ -60,8 +61,40 @@ const mongoose=require('mongoose');
       default:Date.now(),
       select:false//this field will not to sent to user select is used for senstive info
     },
-    startDates:[Date]
+    startDates:[Date],
+    slug:String
+  },{
+    toJSON:{
+      virtuals:true
+    },
+    toObject:{
+      virtuals:true
+    }
   });
+
+ //virtual properties
+ tourSchema.virtual('durationWeeks').get(function(){
+  return this.duration/7;
+
+ })
+ //we cant use virtual properties in query as they are not the part of schema in database
+ 
+
+
+
+ //just like in express we can use middleware in mongoose 
+ //there are mainly 4 types of middleware in mongoose -document,query,aggregate,model
+ 
+ //DOCUMENT -MIDDLEWARE runs before .save()and .create() it is just like triggers
+
+ tourSchema.pre('save',function(next){
+  this.slug=slugify(this.name,{lower:true})//this is the document on which this middleware will work
+  next();
+})
+
+
+
+
 
 //   //constructing modle
   const Tour=mongoose.model('Tour',tourSchema);
